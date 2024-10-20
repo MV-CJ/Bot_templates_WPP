@@ -7,51 +7,58 @@ Este repositório fornece um template básico para iniciar um projeto de bot no 
 A estrutura do projeto é organizada da seguinte maneira:
 
 ```
-/projeto
-│
-├── /components
-│   ├── /connections
-│   │   ├── connection.js      # Gerencia a conexão com o WhatsApp
-│   │   └── qrcode.js          # Gera e exibe o QR Code para autenticação
-│   │
-│   ├── /Messages
-│   │   ├── Welcome.js          # Envia uma mensagem de boas-vindas ao usuário
-│   │   └── Menu.js             # Exibe um menu de opções para o usuário
-│   │
-│   └── app.js                  # Ponto de entrada do bot
-│
-└── package.json                 # Gerenciador de dependências do projeto
-```
-
-## Funcionalidades do Bot
-
-### 1. Conexão com WhatsApp
-
-O bot inicia gerando um QR Code que deve ser escaneado pelo usuário. O arquivo `connection.js` gerencia essa conexão.
-
-### 2. Mensagem de Boas-vindas
-
-Assim que o usuário enviar uma mensagem, o bot responde com uma saudação através do componente `Welcome.js`. O objetivo é acolher o usuário e informá-lo sobre as opções de atendimento disponíveis.
-
-### 3. Menu de Opções
-
-Após a saudação, o bot exibe um menu de opções utilizando o componente `Menu.js`. O menu contém as seguintes opções:
+📂 auth_info/               # Armazena as informações de autenticação do WhatsApp
+📂 components/
+ ┣ 📂 Connections/           # Gerencia a conexão com o WhatsApp
+ ┃ ┣ 📜 Connection.js        # Configuração da conexão do bot com o WhatsApp
+ ┃ ┗ 📜 QRCode.js            # Geração e exibição do QR Code para autenticação
+ ┣ 📂 Menu/                  # Exibe o menu principal para o usuário
+ ┃ ┗ 📜 Menu.js              # Lógica para enviar o menu de opções ao usuário
+ ┣ 📂 Messages/              # Gerencia as mensagens de boas-vindas
+ ┃ ┗ 📜 Welcome.js           # Mensagem de boas-vindas ao usuário
+ ┗ 📂 Services/              # Contém os serviços relacionados às opções do menu
+   ┣ 📜 aiRecommendation.js  # Serviço experimental de recomendação por IA
+   ┣ 📜 catalog.js           # Exibe o catálogo de produtos para o usuário
+   ┣ 📜 exit.js              # Lógica para o usuário sair do atendimento
+   ┣ 📜 salesSpecialist.js   # Conecta o usuário com um especialista de vendas
+   ┗ 📜 techSupport.js       # Assistência técnica virtual para o usuário
+📜 .gitignore                # Arquivos e pastas ignorados no Git
+📜 bot.js                    # Arquivo principal que inicia o bot e gerencia a lógica
+📜 package-lock.json         # Controle de versões do npm
+📜 package.json              # Metadados do projeto e dependências
+📜 README.md                 # Documento de explicação do projeto
 
 ```
-1️⃣ - Ver catálogo / Fazer Pedido
-2️⃣ - Falar com especialista de vendas
-3️⃣ - Assistência Técnica-Virtual
-4️⃣ - I.A Recomenda *(experimental)*
-5️⃣ - Sair
-```
 
-### 4. Interação do Usuário
+## Como Funciona
 
-O bot espera que o usuário escolha uma opção digitando o número correspondente. Se o usuário enviar um texto que não corresponda a uma das opções, o bot informa que não entendeu e reexibe o menu.
+Este projeto foi desenvolvido para ser um ponto de partida para criar um bot personalizado no WhatsApp. O bot é capaz de receber mensagens dos usuários e responder com um menu de opções, permitindo que eles escolham o que desejam fazer. Cada opção leva a um serviço específico.
 
-### 5. Respostas Baseadas na Escolha do Usuário
+### Conexão com o WhatsApp
 
-Dependendo da opção escolhida pelo usuário, o bot pode chamar outras funções específicas para continuar o atendimento. Isso permite que o bot seja facilmente expandido com novas funcionalidades.
+A pasta `Connections` contém os arquivos necessários para gerenciar a conexão do bot com o WhatsApp:
+
+- **Connection.js**: Gerencia a configuração de conexão do bot usando a biblioteca Baileys.
+- **QRCode.js**: Exibe o QR Code necessário para autenticar a sessão do bot.
+
+### Menu e Boas-Vindas
+
+- **Menu.js**: Quando o usuário envia uma mensagem, o bot exibe um menu com várias opções, como visualizar o catálogo, falar com um especialista ou acessar a assistência técnica.
+- **Welcome.js**: Envia uma mensagem de boas-vindas quando o bot recebe uma mensagem pela primeira vez.
+
+### Serviços do Menu
+
+A pasta `Services` contém as lógicas associadas às opções do menu:
+
+- **aiRecommendation.js**: Recomenda produtos com base em uma IA experimental.
+- **catalog.js**: Mostra o catálogo de produtos.
+- **exit.js**: Permite que o usuário saia do atendimento.
+- **salesSpecialist.js**: Conecta o usuário a um especialista de vendas.
+- **techSupport.js**: Oferece assistência técnica virtual ao usuário.
+
+### Respostas Personalizadas
+
+Se o usuário enviar uma mensagem que não corresponde a uma das opções do menu, o bot informará que não entendeu o comando e exibirá o menu novamente.
 
 ## Como Usar Este Template
 
@@ -77,7 +84,7 @@ Para usar este template como base para seu projeto:
 4. **Execute o bot**:
 
    ```bash
-   node components/app.js
+   node bot.js
    ```
 
 5. **Escaneie o QR Code** para autenticar a conexão com o WhatsApp.
